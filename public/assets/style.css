@@ -38,4 +38,9 @@ th {
 
 #api {
     font-size: 2em;
+    font-family: monospace;
+}
+
+#user {
+    font-family: sans-serif;
 }
