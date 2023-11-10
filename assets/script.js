@@ -14,9 +14,9 @@ function parseURL(url) {
 function processDate(year, month, date) {
     const today = new Date();
     return [
-        year ?? today.getFullYear(),
-        month ?? today.getMonth() + 1,
-        date ?? today.getDate(),
+        isNaN(year) ? today.getFullYear() : year,
+        isNaN(month) ? today.getMonth() + 1 : month,
+        isNaN(date) ? today.getDate() : date,
     ];
 }
 
