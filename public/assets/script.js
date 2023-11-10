@@ -69,5 +69,8 @@ function userSite() {
             prayer[0].toUpperCase() + prayer.slice(1);
         $$(`#time-${prayer}`).innerText =
             prayerTimes.data[prayer].toUpperCase();
+        $$("#latitude").innerText = prayerTimes.meta.position.latitude;
+        $$("#longitude").innerText = prayerTimes.meta.position.longitude;
+        $$("#date").innerText = Object.values(prayerTimes.meta.date).join("-");
     }
 }

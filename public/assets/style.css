@@ -1,11 +1,15 @@
 body {
     padding-block: 20vh;
     text-align: center;
-    font-size: 2em;
+}
+
+header {
+    margin-block: 4vh;
 }
 
 table {
     margin-inline: auto;
+    font-size: 2em;
 }
 
 table,
@@ -22,4 +26,12 @@ td {
 
 th {
     background-color: antiquewhite;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#api {
+    font-size: 2em;
 }

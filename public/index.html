@@ -8,7 +8,16 @@
         <script src="./assets/PrayTimes.js"></script>
         <script src="./assets/script.js"></script>
     </head>
-    <body onload="userSite()">
+    <body id="user" onload="userSite()">
+        <header>
+            <h1>Prayer Times</h1>
+            <p>
+                <span class="bold">coordinates:</span>&nbsp;
+                <span id="latitude"></span>,&nbsp;
+                <span id="longitude"></span>
+            </p>
+            <p><span class="bold">date:</span>&nbsp;<span id="date"></span></p>
+        </header>
         <table>
             <thead>
                 <tr>
