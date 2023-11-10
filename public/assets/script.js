@@ -1,3 +1,4 @@
+// alias for retrieving DOM elements
 const $$ = (el) => document.querySelector(el);
 
 function parseURL(url) {
@@ -6,8 +7,8 @@ function parseURL(url) {
         year: parseInt(args.get("year")),
         month: parseInt(args.get("month")),
         date: parseInt(args.get("date")),
-        lat: parseFloat(args.get("lat")),
-        lon: parseFloat(args.get("lon")),
+        latitude: parseFloat(args.get("latitude")),
+        longitude: parseFloat(args.get("longitude")),
     };
 }
 
@@ -20,11 +21,23 @@ function processDate(year, month, date) {
     ];
 }
 
+function processPos(latitude, longitude) {
+    // default coordinates: Halifax, NS, Canada
+    const defaultPos = {
+        latitude: 44.65,
+        longitude: -63.57,
+    };
+    return [
+        isNaN(latitude) ? defaultPos.latitude : latitude,
+        isNaN(longitude) ? defaultPos.longitude : longitude,
+    ];
+}
+
 function getPrayerTimes(params) {
     prayTimes.setMethod("ISNA");
     const times = prayTimes.getTimes(
         processDate(params.year, params.month, params.date),
-        [params.lat, params.lon],
+        processPos(params.latitude, params.longitude),
         "auto",
         "auto",
         "12h"
