@@ -14,40 +14,45 @@ function parseURL(url) {
 
 function processDate(year, month, date) {
     const today = new Date();
-    return [
-        isNaN(year) ? today.getFullYear() : year,
-        isNaN(month) ? today.getMonth() + 1 : month,
-        isNaN(date) ? today.getDate() : date,
-    ];
+    return {
+        year: isNaN(year) ? today.getFullYear() : year,
+        month: isNaN(month) ? today.getMonth() + 1 : month,
+        date: isNaN(date) ? today.getDate() : date,
+    };
 }
 
 function processPos(latitude, longitude) {
     // default coordinates: Halifax, NS, Canada
-    const defaultPos = {
-        latitude: 44.65,
-        longitude: -63.57,
+    const defaultPos = { latitude: 44.65, longitude: -63.57 };
+    return {
+        latitude: isNaN(latitude) ? defaultPos.latitude : latitude,
+        longitude: isNaN(longitude) ? defaultPos.longitude : longitude,
     };
-    return [
-        isNaN(latitude) ? defaultPos.latitude : latitude,
-        isNaN(longitude) ? defaultPos.longitude : longitude,
-    ];
 }
 
 function getPrayerTimes(params) {
+    const date = processDate(params.year, params.month, params.date);
+    const pos = processPos(params.latitude, params.longitude);
     prayTimes.setMethod("ISNA");
     const times = prayTimes.getTimes(
-        processDate(params.year, params.month, params.date),
-        processPos(params.latitude, params.longitude),
+        [date.year, date.month, date.date],
+        [pos.latitude, pos.longitude],
         "auto",
         "auto",
         "12h"
     );
     return {
-        fajr: times.fajr,
-        zuhr: times.dhuhr,
-        asr: times.asr,
-        maghrib: times.maghrib,
-        isha: times.isha,
+        meta: {
+            date: date,
+            position: pos,
+        },
+        data: {
+            fajr: times.fajr,
+            zuhr: times.dhuhr,
+            asr: times.asr,
+            maghrib: times.maghrib,
+            isha: times.isha,
+        },
     };
 }
 
@@ -59,9 +64,10 @@ function apiSite() {
 
 function userSite() {
     const prayerTimes = getPrayerTimes(parseURL(window.location.search));
-    for (const prayer in prayerTimes) {
+    for (const prayer in prayerTimes.data) {
         $$(`#prayer-${prayer}`).innerText =
             prayer[0].toUpperCase() + prayer.slice(1);
-        $$(`#time-${prayer}`).innerText = prayerTimes[prayer].toUpperCase();
+        $$(`#time-${prayer}`).innerText =
+            prayerTimes.data[prayer].toUpperCase();
     }
 }
