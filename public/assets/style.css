@@ -7,6 +7,10 @@ header {
     margin-block: 4vh;
 }
 
+header > p {
+    font-size: larger;
+}
+
 table {
     margin-inline: auto;
     font-size: 2em;
