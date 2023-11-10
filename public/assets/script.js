@@ -20,6 +20,19 @@ function processDate(year, month, date) {
     ];
 }
 
+function processPos(lat, lon) {
+    const pos = { lat: 0, lon: 0 };
+    if (isNaN(lat) || isNaN(lon)) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                pos.lat = pos.coords.latitude;
+                pos.lon = pos.coords.longitude;
+            });
+        }
+    }
+    return [pos.lat, pos.lon];
+}
+
 function getPrayerTimes(params) {
     prayTimes.setMethod("ISNA");
     const times = prayTimes.getTimes(
