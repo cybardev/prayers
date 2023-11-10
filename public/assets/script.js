@@ -13,6 +13,7 @@ function parseURL(url) {
 }
 
 function processDate(year, month, date) {
+    // default date: today
     const today = new Date();
     return {
         year: isNaN(year) ? today.getFullYear() : year,
