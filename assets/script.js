@@ -1,19 +1,36 @@
-function parseURL() {
-    const args = new URLSearchParams(window.location.search);
-    const year = parseInt(args.get("year")),
-        month = parseInt(args.get("month")),
-        date = parseInt(args.get("date")),
-        lat = parseFloat(args.get("lat")),
-        lon = parseFloat(args.get("lon")),
-        timezone = lon / 0.004167;
+const $$ = (el) => document.querySelector(el);
+
+function parseURL(url) {
+    const args = new URLSearchParams(url);
     return {
-        year: year,
-        month: month,
-        date: date,
-        lat: lat,
-        lon: lon,
-        timezone: timezone,
+        year: parseInt(args.get("year")),
+        month: parseInt(args.get("month")),
+        date: parseInt(args.get("date")),
+        lat: parseFloat(args.get("lat")),
+        lon: parseFloat(args.get("lon")),
     };
 }
 
-window.addEventListener("load", () => {})
+function getPrayerTimes(params) {
+    prayTimes.setMethod("ISNA");
+    const times = prayTimes.getTimes(
+        [params.year, params.month, params.date],
+        [params.lat, params.lon],
+        "auto",
+        "auto",
+        "12h"
+    );
+    return {
+        fajr: times.fajr,
+        zuhr: times.dhuhr,
+        asr: times.asr,
+        maghrib: times.maghrib,
+        isha: times.isha,
+    };
+}
+
+window.addEventListener("load", () => {
+    $$("body").innerHTML = JSON.stringify(
+        getPrayerTimes(parseURL(window.location.search))
+    );
+});
