@@ -1,6 +1,13 @@
-body {
+#api {
+    font-size: 2em;
+    font-family: monospace;
+    white-space: pre;
+}
+
+#user {
     padding-block: 10vh;
     text-align: center;
+    font-family: sans-serif;
 }
 
 header {
@@ -34,13 +41,4 @@ th {
 
 .bold {
     font-weight: bold;
-}
-
-#api {
-    font-size: 2em;
-    font-family: monospace;
-}
-
-#user {
-    font-family: sans-serif;
 }

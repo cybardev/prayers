@@ -59,7 +59,9 @@ function getPrayerTimes(params) {
 
 function apiSite() {
     $$("body").innerText = JSON.stringify(
-        getPrayerTimes(parseURL(window.location.search))
+        getPrayerTimes(parseURL(window.location.search)),
+        undefined,
+        2
     );
 }
 
