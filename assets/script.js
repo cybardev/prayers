@@ -11,10 +11,19 @@ function parseURL(url) {
     };
 }
 
+function processDate(year, month, date) {
+    const today = new Date();
+    return [
+        year ?? today.getFullYear(),
+        month ?? today.getMonth() + 1,
+        date ?? today.getDate(),
+    ];
+}
+
 function getPrayerTimes(params) {
     prayTimes.setMethod("ISNA");
     const times = prayTimes.getTimes(
-        [params.year, params.month, params.date],
+        processDate(params.year, params.month, params.date),
         [params.lat, params.lon],
         "auto",
         "auto",
