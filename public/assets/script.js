@@ -38,8 +38,17 @@ function getPrayerTimes(params) {
     };
 }
 
-window.addEventListener("load", () => {
-    $$("body").innerHTML = JSON.stringify(
+function apiSite() {
+    $$("body").innerText = JSON.stringify(
         getPrayerTimes(parseURL(window.location.search))
     );
-});
+}
+
+function userSite() {
+    const prayerTimes = getPrayerTimes(parseURL(window.location.search));
+    for (const prayer in prayerTimes) {
+        $$(`#prayer-${prayer}`).innerText =
+            prayer[0].toUpperCase() + prayer.slice(1);
+        $$(`#time-${prayer}`).innerText = prayerTimes[prayer].toUpperCase();
+    }
+}

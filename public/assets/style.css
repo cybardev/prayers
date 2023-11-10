@@ -1,0 +1,25 @@
+body {
+    padding-block: 20vh;
+    text-align: center;
+    font-size: 2em;
+}
+
+table {
+    margin-inline: auto;
+}
+
+table,
+th,
+td {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+}
+
+th {
+    background-color: antiquewhite;
+}
