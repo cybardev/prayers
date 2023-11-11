@@ -2,7 +2,7 @@
 const $$ = (el) => document.querySelector(el);
 
 function getPrayerTimes(params) {
-    const result = null;
+    let result = null;
     fetch(`https://prayertimes.cybar.dev/${params}`)
         .then((res) => res.json())
         .then((data) => (result = data))
