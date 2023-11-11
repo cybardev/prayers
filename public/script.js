@@ -15,10 +15,10 @@ function getPrayerTimes() {
             $$("#longitude").innerText = body.meta.position.longitude;
             // prayer times
             const prayers = $$("#prayers");
-            for (const prayer in body.data) {
+            for (const [prayer, time] of Object.entries(body.data)) {
                 prayers.insertAdjacentHTML(
                     "beforeend",
-                    prayerEntry(prayer, body.data[prayer])
+                    prayerEntry(prayer, time)
                 );
             }
         })
