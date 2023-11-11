@@ -16,7 +16,10 @@ function getPrayerTimes() {
             // prayer times
             const prayers = $$("#prayers");
             for (const prayer in body.data) {
-                prayers.innerHTML += prayerEntry(prayer, body.data[prayer]);
+                prayers.insertAdjacentHTML(
+                    "beforeend",
+                    prayerEntry(prayer, body.data[prayer])
+                );
             }
         })
         .catch((err) => console.error(err));
