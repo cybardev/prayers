@@ -11,10 +11,8 @@ function getPrayerTimes() {
             $$("#longitude").innerText = body.meta.position.longitude;
             // prayer times
             for (const prayer in body.data) {
-                $$(`#prayer-${prayer}`).innerText =
-                    prayer[0].toUpperCase() + prayer.slice(1);
-                $$(`#time-${prayer}`).innerText =
-                    body.data[prayer].toUpperCase();
+                $$(`#prayer-${prayer}`).innerText = prayer;
+                $$(`#time-${prayer}`).innerText = body.data[prayer];
             }
         })
         .catch((err) => console.error(err));
