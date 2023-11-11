@@ -1,26 +1,17 @@
 // alias for retrieving DOM elements
 const $$ = (el) => document.querySelector(el);
 
-function parseURL(url) {
-    return new URL(url).search;
-}
-
 function getPrayerTimes(params) {
-    const res = null;
-    // TODO: fetch prayer times from API
-    return res;
-}
-
-function apiSite() {
-    $$("body").innerText = JSON.stringify(
-        getPrayerTimes(parseURL(window.location.search)),
-        undefined,
-        2
-    );
+    const result = null;
+    fetch(`https://prayertimes.cybar.dev/${params}`)
+        .then((res) => res.json())
+        .then((data) => (result = data))
+        .catch((err) => console.log(err));
+    return result;
 }
 
 function userSite() {
-    const prayerTimes = getPrayerTimes(parseURL(window.location.search));
+    const prayerTimes = getPrayerTimes(window.location.search);
     for (const prayer in prayerTimes.data) {
         $$(`#prayer-${prayer}`).innerText =
             prayer[0].toUpperCase() + prayer.slice(1);
