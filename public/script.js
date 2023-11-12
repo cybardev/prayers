@@ -17,8 +17,30 @@ function populatePrayerEntries(meta, data) {
     }
 }
 
+function getTZOffset(date) {
+    return -date.getTimezoneOffset() / 60;
+}
+
+function isDaylightSavingTime(date) {
+    const january = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
+    const july = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+    // check DST by comparing max standard offset with current offset
+    return Math.max(january, july) !== date.getTimezoneOffset() ? 1 : 0;
+}
+
+function prepareQueryParams(currentParams) {
+    const params = new URLSearchParams(currentParams);
+    if (!params.has("tz")) {
+        params.set("tz", getTZOffset(new Date()));
+    }
+    if (!params.has("dst")) {
+        params.set("dst", isDaylightSavingTime(new Date()));
+    }
+    return `?${params.toString()}`;
+}
+
 function getPrayerTimes() {
-    fetch(`/api/${window.location.search}`)
+    fetch(`/api/${prepareQueryParams(window.location.search)}`)
         .then((response) => response.json())
         .then((body) => populatePrayerEntries(body.meta, body.data))
         .catch((err) => console.error(err));
