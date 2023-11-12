@@ -6,7 +6,7 @@ function prayerEntry(name, time) {
 }
 
 function getPrayerTimes() {
-    fetch(`https://prayertimes.cybar.dev/${window.location.search}`)
+    fetch(`/api/${window.location.search}`)
         .then((response) => response.json())
         .then((body) => {
             // metadata
