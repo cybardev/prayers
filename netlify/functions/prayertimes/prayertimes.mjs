@@ -87,6 +87,4 @@ export default async (req, ctx) => {
 };
 
 // re-route endpoint to /api
-export const config = {
-    path: "/api",
-};
+export const config = { path: "/api" };
