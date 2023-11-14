@@ -2,7 +2,7 @@
 const $$ = (el) => document.querySelector(el);
 
 // prayer times API endpoint
-const API_ENDPOINT = "https://prayers.cybar.dev/api";
+const API_ENDPOINT = "https://prayertimes.cybar.dev/api";
 
 function prayerEntry(name, time) {
     return `<tr><td>${name}</td><td>${time}</td></tr>`;
