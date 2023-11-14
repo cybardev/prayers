@@ -1,6 +1,9 @@
 // alias for retrieving DOM elements
 const $$ = (el) => document.querySelector(el);
 
+// prayer times API endpoint
+const API_ENDPOINT = "https://prayers.cybar.dev/api";
+
 function prayerEntry(name, time) {
     return `<tr><td>${name}</td><td>${time}</td></tr>`;
 }
@@ -40,7 +43,7 @@ function prepareQueryParams(currentParams) {
 }
 
 function getPrayerTimes() {
-    fetch(`/api/${prepareQueryParams(window.location.search)}`)
+    fetch(`${API_ENDPOINT}/${prepareQueryParams(window.location.search)}`)
         .then((response) => response.json())
         .then((body) => populatePrayerEntries(body.meta, body.data))
         .catch((err) => console.error(err));
