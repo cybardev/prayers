@@ -81,28 +81,28 @@ function getPrayerTimes(params) {
     };
 }
 
-export default async (req, ctx) => {
-    return req.method === "GET"
-        ? new Response(
-              JSON.stringify(getPrayerTimes(parseURL(req.url)), undefined, 2),
-              {
-                  status: 200,
-                  headers: {
-                      "content-type": "application/json;charset=UTF-8",
-                      "Access-Control-Allow-Methods": "GET",
-                      "Access-Control-Allow-Origin":
-                          "https://prayers.cybar.dev",
-                  },
-              }
-          )
-        : new Response("Invalid Request: only GET requests supported", {
-              status: 405,
-              headers: {
-                  "Access-Control-Allow-Methods": "GET",
-                  "Access-Control-Allow-Origin": "https://prayers.cybar.dev",
-              },
-          });
-};
+function validResponse(url) {
+    return new Response(
+        JSON.stringify(getPrayerTimes(parseURL(url)), undefined, 2),
+        {
+            status: 200,
+            headers: {
+                "content-type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Methods": "GET",
+                "Access-Control-Allow-Origin": "https://prayers.cybar.dev",
+            },
+        }
+    );
+}
 
-// re-route endpoint to /api
-export const config = { path: "/api" };
+function invalidResponse() {
+    return new Response("Invalid Request: only GET requests supported", {
+        status: 405,
+        headers: {
+            "Access-Control-Allow-Methods": "GET",
+            "Access-Control-Allow-Origin": "https://prayers.cybar.dev",
+        },
+    });
+}
+
+export default { validResponse, invalidResponse };
