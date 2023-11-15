@@ -1,5 +1,5 @@
 import successResponse from "../../src/prayertimes.mjs";
 
-export function onRequestGet(ctx) {
-    return successResponse(ctx.request.url);
+export function onRequestGet(context) {
+    return successResponse(context.request.url);
 }
