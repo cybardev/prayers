@@ -1,5 +1,11 @@
 import prayTimes from "./PrayTimes.mjs";
 
+/**
+ * Generate JSON object from URL query params
+ *
+ * @param {String} url request URL
+ * @returns JSON object containing query param info
+ */
 function parseURL(url) {
     const args = new URL(url).searchParams;
     return {
@@ -13,6 +19,13 @@ function parseURL(url) {
     };
 }
 
+/**
+ * Get valid latitude and longitude from query params
+ *
+ * @param {Number} latitude latitude in degrees
+ * @param {Number} longitude longitude in degrees
+ * @returns processed latitude and longitude
+ */
 function processPos(latitude, longitude) {
     // default coordinates: Halifax, NS, Canada
     const defaultPos = { latitude: 44.65, longitude: -63.57 };
@@ -21,6 +34,14 @@ function processPos(latitude, longitude) {
         : { latitude: latitude, longitude: longitude };
 }
 
+/**
+ * Get valid date info from query params
+ *
+ * @param {Number} year year for prayer times
+ * @param {Number} month month for prayer times (1-12)
+ * @param {Number} date date for prayer times (1-31)
+ * @returns year, month, and date for prayer times
+ */
 function processDate(year, month, date) {
     // default date: today
     const today = new Date();
@@ -31,6 +52,13 @@ function processDate(year, month, date) {
     };
 }
 
+/**
+ * Process timezone offset and daylight saving time indicator from query params
+ *
+ * @param {Number} tz_offset timezone offset in hours
+ * @param {0 | 1} dst daylight saving time indicator
+ * @returns timezone offset, daylight saving time indicator, and time format
+ */
 function processTime(tz_offset, dst) {
     // default time: Atlantic Standard Time (AST)
     const ast = { tz_offset: -4, dst: 0 };
@@ -44,6 +72,12 @@ function processTime(tz_offset, dst) {
     };
 }
 
+/**
+ * Generate prayer times and relevant info from query params
+ *
+ * @param {String} params query params
+ * @returns prayer times and relevant info
+ */
 function getPrayerTimes(params) {
     const date = processDate(params.year, params.month, params.date);
     const pos = processPos(params.latitude, params.longitude);
@@ -81,6 +115,12 @@ function getPrayerTimes(params) {
     };
 }
 
+/**
+ * Generate response for succsessful request
+ *
+ * @param {String} url request URL
+ * @returns response with prayer times and additional info
+ */
 function successResponse(url) {
     return new Response(
         JSON.stringify(getPrayerTimes(parseURL(url)), undefined, 2),
