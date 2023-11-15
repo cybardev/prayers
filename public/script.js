@@ -8,12 +8,23 @@ function prayerEntry(name, time) {
     return `<tr><td>${name}</td><td>${time}</td></tr>`;
 }
 
-function populatePrayerEntries(meta, data) {
-    // metadata
-    $$("#date").innerText = Object.values(meta.date).join("-");
-    $$("#latitude").innerText = meta.position.latitude;
-    $$("#longitude").innerText = meta.position.longitude;
-    // prayer times
+/**
+ * Populate metadata slots in page
+ *
+ * @param {JSON} data info about the request
+ */
+function populateMetadata(data) {
+    $$("#date").innerText = Object.values(data.date).join("-");
+    $$("#latitude").innerText = data.position.latitude;
+    $$("#longitude").innerText = data.position.longitude;
+}
+
+/**
+ * Populate prayer entries into table
+ *
+ * @param {JSON} data prayer time data
+ */
+function populatePrayerEntries(data) {
     const prayers = $$("#prayers");
     for (const [prayer, time] of Object.entries(data.prayers)) {
         prayers.insertAdjacentHTML("beforeend", prayerEntry(prayer, time));
@@ -45,6 +56,9 @@ function prepareQueryParams(currentParams) {
 function getPrayerTimes() {
     fetch(`${API_ENDPOINT}/${prepareQueryParams(window.location.search)}`)
         .then((response) => response.json())
-        .then((body) => populatePrayerEntries(body.meta, body.data))
+        .then((body) => {
+            populateMetadata(body.meta);
+            populatePrayerEntries(body.data);
+        })
         .catch((err) => console.error(err));
 }
