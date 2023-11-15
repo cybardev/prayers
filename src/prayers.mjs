@@ -4,7 +4,7 @@ import prayTimes from "./PrayTimes.mjs";
  * Generate JSON object from URL query params
  *
  * @param {String} url request URL
- * @returns JSON object containing query param info
+ * @returns object containing query param info
  */
 function parseURL(url) {
     const args = new URL(url).searchParams;
