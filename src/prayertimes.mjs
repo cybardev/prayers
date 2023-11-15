@@ -81,7 +81,7 @@ function getPrayerTimes(params) {
     };
 }
 
-function validResponse(url) {
+function successResponse(url) {
     return new Response(
         JSON.stringify(getPrayerTimes(parseURL(url)), undefined, 2),
         {
@@ -95,14 +95,4 @@ function validResponse(url) {
     );
 }
 
-function invalidResponse() {
-    return new Response("Invalid Request: only GET requests supported", {
-        status: 405,
-        headers: {
-            "Access-Control-Allow-Methods": "GET",
-            "Access-Control-Allow-Origin": "https://prayers.cybar.dev",
-        },
-    });
-}
-
-export default { validResponse, invalidResponse };
+export default successResponse;
