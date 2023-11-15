@@ -1,7 +1,5 @@
 import res from "../../src/prayertimes.mjs";
 
-export function onRequest(context) {
-    return context.request.method === "GET"
-        ? res.validResponse(request.url)
-        : res.invalidResponse();
+export function onRequestGet(ctx) {
+    return res.validResponse(ctx.request.url);
 }
