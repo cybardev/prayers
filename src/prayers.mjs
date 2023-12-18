@@ -79,8 +79,8 @@ function processTime(tz_offset, dst) {
  * @returns prayer times and relevant info
  */
 function getPrayerTimes(params) {
-    const date = processDate(params.year, params.month, params.date);
     const pos = processPos(params.latitude, params.longitude);
+    const date = processDate(params.year, params.month, params.date);
     const timeinfo = processTime(params.tz_offset, params.dst);
     prayTimes.setMethod("ISNA");
     const times = prayTimes.getTimes(
