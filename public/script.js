@@ -5,17 +5,6 @@ const $$ = (el) => document.querySelector(el);
 const API_ENDPOINT = "/api";
 
 /**
- * Generate a table row with given prayer information
- *
- * @param {String} name prayer name
- * @param {String} time time of azan
- * @returns HTML table row
- */
-function prayerEntry(name, time) {
-    return `<tr><td>${name}</td><td>${time}</td></tr>`;
-}
-
-/**
  * Populate metadata slots in page
  *
  * @param { {
@@ -47,8 +36,22 @@ function populateMetadata(data) {
  */
 function populatePrayerEntries(data) {
     const prayers = $$("#prayers");
-    for (const [prayer, time] of Object.entries(data.prayers)) {
-        prayers.insertAdjacentHTML("beforeend", prayerEntry(prayer, time));
+    // Check for HTML template support
+    if ("content" in document.createElement("template")) {
+        const prayer = $$("#prayer");
+        for (const [name, time] of Object.entries(data.prayers)) {
+            const prayerEntry = prayer.content.cloneNode(true);
+            let [prayerName, prayerTime] = prayerEntry.querySelectorAll("td");
+            prayerName.textContent = name;
+            prayerTime.textContent = time;
+            prayers.appendChild(prayerEntry);
+        }
+    } else {
+        // Fallback for browsers without HTML template support
+        for (const [name, time] of Object.entries(data.prayers)) {
+            const prayerEntry = `<tr><td>${name}</td><td>${time}</td></tr>`;
+            prayers.insertAdjacentHTML("beforeend", prayerEntry);
+        }
     }
 }
 
