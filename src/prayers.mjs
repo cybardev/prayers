@@ -53,6 +53,18 @@ function processDate(year, month, date) {
 }
 
 /**
+ * Return DST status of given Date object
+ *
+ * @param {Date} d date to check DST status of
+ * @returns true if DST is in effect, false otherwise.
+ */
+function isDST(d) {
+    const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
+    const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
+    return Math.max(jan, jul) !== d.getTimezoneOffset();
+}
+
+/**
  * Process timezone offset and daylight saving time indicator from query params
  *
  * @param {Number} tz_offset timezone offset in hours
@@ -60,8 +72,8 @@ function processDate(year, month, date) {
  * @returns timezone offset, daylight saving time indicator, and time format
  */
 function processTime(tz_offset, dst) {
-    // default time: Atlantic Standard Time (AST)
-    const ast = { tz_offset: -4, dst: 0 };
+    // default timezone: Atlantic Standard Time (AST) or Atlantic Daylight Time (ADT)
+    const ast = { tz_offset: -4, dst: isDST(new Date()) ? 1 : 0 };
     return {
         tz_offset:
             isNaN(tz_offset) || tz_offset < -12 || tz_offset > 12
