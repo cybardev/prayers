@@ -55,6 +55,8 @@ function processDate(year, month, date) {
 /**
  * Return DST status of given Date object
  *
+ * source: https://stackoverflow.com/a/30280636
+ *
  * @param {Date} d date to check DST status of
  * @returns true if DST is in effect, false otherwise.
  */
