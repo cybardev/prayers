@@ -18,10 +18,18 @@
         <main hx-ext="client-side-templates">
             <section id="slot">
                 <form hx-get="/api" hx-target="#slot" hx-swap="outerHTML" handlebars-template="page">
-                    <label for="lat">Latitude:</label>
-                    <input type="number" id="lat" name="lat" min="-90" max="90" step=".01" value="44.65" />
-                    <label for="lon">Longitude:</label>
-                    <input type="number" id="lon" name="lon" min="-180" max="180" step=".01" value="-63.57" />
+                    <label for="latitude">Latitude:</label>
+                    <input type="number" id="latitude" name="latitude" min="-90" max="90" step=".01" value="44.65" />
+                    <label for="longitude">Longitude:</label>
+                    <input
+                        type="number"
+                        id="longitude"
+                        name="longitude"
+                        min="-180"
+                        max="180"
+                        step=".01"
+                        value="-63.57"
+                    />
                     <br />
                     <label for="year">Year:</label>
                     <input type="number" id="year" name="year" min="0" max="9999" step="1" value="2024" />
