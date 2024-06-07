@@ -3,40 +3,56 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="Site to fetch Islamic prayer times for a given date and location"
-        />
+        <meta name="description" content="Site to fetch Islamic prayer times for a given date and location" />
         <title>Prayer Times</title>
         <link rel="stylesheet" href="./style.css" />
-        <script src="./script.js"></script>
+        <script src="https://unpkg.com/htmx.org"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/client-side-templates.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     </head>
-    <body onload="getPrayerTimes()">
+    <body>
         <header>
             <h1>Prayer Times</h1>
-            <p>
-                <span class="bold">coordinates:</span>&nbsp;
-                <span id="latitude"></span>,&nbsp;
-                <span id="longitude"></span>
-            </p>
-            <p><span class="bold">date:</span>&nbsp;<span id="date"></span></p>
         </header>
-        <table>
-            <thead>
-                <tr>
-                    <th>Prayer</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody id="prayers">
-                <!-- populate table data via JavaScript -->
-                <template id="prayer">
-                    <tr>
-                        <td>name</td>
-                        <td>time</td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
+        <main hx-ext="client-side-templates">
+            <section
+                hx-trigger="load"
+                hx-get="/api"
+                hx-params="*"
+                hx-target="this"
+                hx-swap="outerHTML"
+                handlebars-template="page"
+            ></section>
+        </main>
+        <script id="page" type="text/x-handlebars-template">
+            {{#meta}}
+                <section>
+                    <p>
+                        <span class="bold">coordinates:</span>
+                        {{position.latitude}},
+                        {{position.longitude}}
+                    </p>
+                    <p><span class="bold">date:</span> {{date.year}}-{{date.month}}-{{date.date}}</p>
+                </section>
+            {{/meta}}
+            {{#data}}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prayer</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each prayers}}
+                            <tr>
+                                <td>{{@key}}</td>
+                                <td>{{this}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{/data}}
+        </script>
     </body>
 </html>
