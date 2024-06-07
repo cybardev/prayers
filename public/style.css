@@ -24,3 +24,18 @@ tbody > tr > td:nth-of-type(2) {
 .bold {
     font-weight: bold;
 }
+
+input,
+label,
+select {
+    display: inline;
+}
+
+input[type="number"] {
+    width: 80px;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+}
