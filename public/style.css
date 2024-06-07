@@ -21,10 +21,6 @@ tbody > tr > td:nth-of-type(2) {
     text-transform: uppercase;
 }
 
-.bold {
-    font-weight: bold;
-}
-
 input,
 label,
 select {
@@ -38,4 +34,12 @@ input[type="number"] {
 button[type="submit"] {
     display: block;
     width: 100%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#reload {
+    margin-top: 4vh;
 }
