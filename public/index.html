@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Site to fetch Islamic prayer times for a given date and location" />
         <title>Prayer Times</title>
+        <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
         <link rel="stylesheet" href="./style.css" />
         <script src="https://unpkg.com/htmx.org"></script>
         <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/client-side-templates.js"></script>
@@ -36,22 +37,24 @@
                 </section>
             {{/meta}}
             {{#data}}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Prayer</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each prayers}}
+                <section>
+                    <table>
+                        <thead>
                             <tr>
-                                <td>{{@key}}</td>
-                                <td>{{this}}</td>
+                                <th>Prayer</th>
+                                <th>Time</th>
                             </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {{#each prayers}}
+                                <tr>
+                                    <td>{{@key}}</td>
+                                    <td>{{this}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </section>
             {{/data}}
         </script>
     </body>

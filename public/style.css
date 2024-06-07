@@ -1,36 +1,14 @@
 body {
-    padding-block: 10vh;
     text-align: center;
     font-family: sans-serif;
-}
-
-header {
-    margin-block: 4vh;
-}
-
-header > p {
-    font-size: larger;
-}
-
-table {
-    margin-inline: auto;
-    font-size: 2em;
 }
 
 table,
 th,
 td {
-    border: 1px solid;
+    font-size: large;
+    border: 1px solid lightgrey;
     border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 10px;
-}
-
-th {
-    background-color: antiquewhite;
 }
 
 /* capitalize first letter of prayer names */
