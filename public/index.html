@@ -83,5 +83,14 @@
             {{/data}}
             <button id="reload" onclick="window.location.reload()">New Search</button>
         </script>
+        <script>
+            window.onload = function () {
+                const $$ = (e) => document.querySelector(e);
+                const today = new Date();
+                $$("#year").value = today.getFullYear();
+                $$("#month").value = today.getMonth() + 1; // +1 for Jan = 0
+                $$("#date").value = today.getDate();
+            };
+        </script>
     </body>
 </html>
