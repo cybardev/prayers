@@ -27,16 +27,16 @@ window.onload = function () {
             e.detail.parameters["date"],
         ] = e.detail.parameters["date"].split("-");
     });
+
+    function isDST(d) {
+        const year = d.getFullYear();
+        const jan = new Date(year, 0, 1).getTimezoneOffset();
+        const jul = new Date(year, 6, 1).getTimezoneOffset();
+        return Math.max(jan, jul) !== d.getTimezoneOffset();
+    }
+
+    function getTZOffset(d, dst) {
+        dst = dst || isDST(d);
+        return -d.getTimezoneOffset() / 60 - (dst ? 1 : 0);
+    }
 };
-
-function isDST(d) {
-    const year = d.getFullYear();
-    const jan = new Date(year, 0, 1).getTimezoneOffset();
-    const jul = new Date(year, 6, 1).getTimezoneOffset();
-    return Math.max(jan, jul) !== d.getTimezoneOffset();
-}
-
-function getTZOffset(d, dst) {
-    dst = dst || isDST(d);
-    return -d.getTimezoneOffset() / 60 - (dst ? 1 : 0);
-}
