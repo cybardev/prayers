@@ -8,18 +8,20 @@ window.onload = function () {
         today.getDate().toString().padStart(2, "0"),
     ].join("-");
 
+    console.log(isDST(today));
+    console.log(getTZOffset(today));
+
     // process params to send with request
     document.body.addEventListener("htmx:configRequest", (e) => {
+        const date = new Date(e.detail.parameters["date"]);
         // add dst status to request params
-        e.detail.parameters["dst"] = isDST(new Date(e.detail.parameters["date"]))
-            ? "1"
-            : "0";
-        console.log(e.detail.parameters["dst"]);
+        e.detail.parameters["dst"] = isDST(date) ? "1" : "0";
 
         // add timezone offset to request params
-        e.detail.parameters["tz"] =
-            -today.getTimezoneOffset() / 60 - parseInt(e.detail.parameters["dst"]);
-        console.log(e.detail.parameters["tz"]);
+        e.detail.parameters["tz"] = getTZOffset(
+            date,
+            e.detail.parameters["dst"] === "1"
+        );
 
         // parse date input
         [
@@ -35,4 +37,9 @@ function isDST(d) {
     const jan = new Date(year, 0, 1).getTimezoneOffset();
     const jul = new Date(year, 6, 1).getTimezoneOffset();
     return Math.max(jan, jul) !== d.getTimezoneOffset();
+}
+
+function getTZOffset(d, dst) {
+    dst = dst || isDST(d);
+    return -d.getTimezoneOffset() / 60 - (dst ? 1 : 0);
 }
