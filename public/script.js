@@ -8,9 +8,6 @@ window.onload = function () {
         today.getDate().toString().padStart(2, "0"),
     ].join("-");
 
-    console.log(isDST(today));
-    console.log(getTZOffset(today));
-
     // process params to send with request
     document.body.addEventListener("htmx:configRequest", (e) => {
         const date = new Date(e.detail.parameters["date"]);
