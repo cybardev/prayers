@@ -3,13 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Site to fetch Islamic prayer times for a given date and location" />
+        <meta
+            name="description"
+            content="Site to fetch Islamic prayer times for a given date and location"
+        />
         <title>Prayer Times</title>
         <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
         <link rel="stylesheet" href="./style.css" />
         <script src="https://unpkg.com/htmx.org"></script>
         <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/client-side-templates.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script defer src="./script.js"></script>
     </head>
     <body>
         <header>
@@ -17,35 +21,47 @@
         </header>
         <main hx-ext="client-side-templates">
             <section id="slot">
-                <form hx-get="/api" hx-target="#slot" hx-swap="outerHTML" handlebars-template="page">
-                    <label for="latitude">Latitude:</label>
-                    <input type="number" id="latitude" name="latitude" min="-90" max="90" step=".01" value="44.65" />
-                    <label for="longitude">Longitude:</label>
-                    <input
-                        type="number"
-                        id="longitude"
-                        name="longitude"
-                        min="-180"
-                        max="180"
-                        step=".01"
-                        value="-63.57"
-                    />
-                    <br />
-                    <label for="year">Year:</label>
-                    <input type="number" id="year" name="year" min="0" step="1" value="2024" />
-                    <label for="month">Month:</label>
-                    <input type="number" id="month" name="month" min="1" max="12" step="1" value="6" />
-                    <label for="date">Date:</label>
-                    <input type="number" id="date" name="date" min="1" max="31" step="1" value="7" />
-                    <br />
-                    <label for="tz">Timezone Offset:</label>
-                    <input type="number" id="tz" name="tz" min="-12" max="14" step=".01" value="-4" />
-                    <br />
-                    <label for="dst">Daylight Saving:</label>
-                    <select name="dst" id="dst">
-                        <option value="0">off</option>
-                        <option value="1">on</option>
-                    </select>
+                <form
+                    hx-get="/api"
+                    hx-target="#slot"
+                    hx-swap="outerHTML"
+                    handlebars-template="page"
+                >
+                    <div>
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" value="2024-06-08" />
+                    </div>
+                    <div>
+                        <label for="latitude">Latitude:</label>
+                        <input
+                            type="number"
+                            id="latitude"
+                            name="latitude"
+                            min="-90"
+                            max="90"
+                            step=".01"
+                            value="44.65"
+                        />
+                    </div>
+                    <div>
+                        <label for="longitude">Longitude:</label>
+                        <input
+                            type="number"
+                            id="longitude"
+                            name="longitude"
+                            min="-180"
+                            max="180"
+                            step=".01"
+                            value="-63.57"
+                        />
+                    </div>
+                    <div>
+                        <label for="dst">Daylight Saving:</label>
+                        <select name="dst" id="dst">
+                            <option value="0">off</option>
+                            <option value="1">on</option>
+                        </select>
+                    </div>
                     <button type="submit">Show</button>
                 </form>
             </section>
@@ -58,7 +74,8 @@
                         {{position.latitude}},
                         {{position.longitude}}
                     </p>
-                    <p><span class="bold">date:</span> {{date.year}}-{{date.month}}-{{date.date}}</p>
+                    <p><span class="bold">date:</span>
+                        {{date.year}}-{{date.month}}-{{date.date}}</p>
                 </section>
             {{/meta}}
             {{#data}}
@@ -82,15 +99,6 @@
                 </section>
             {{/data}}
             <button id="reload" onclick="window.location.reload()">New Search</button>
-        </script>
-        <script>
-            window.onload = function () {
-                const $$ = (e) => document.querySelector(e);
-                const today = new Date();
-                $$("#year").value = today.getFullYear();
-                $$("#month").value = today.getMonth() + 1; // +1 for Jan = 0
-                $$("#date").value = today.getDate();
-            };
         </script>
     </body>
 </html>
