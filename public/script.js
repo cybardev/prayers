@@ -10,15 +10,27 @@ window.onload = function () {
 
     // process params to send with request
     document.body.addEventListener("htmx:configRequest", (e) => {
+        // add dst status to request params
+        e.detail.parameters["dst"] = isDST(new Date(e.detail.parameters["date"]))
+            ? "1"
+            : "0";
+
+        // add timezone offset to request params
+        e.detail.parameters["tz"] =
+            -today.getTimezoneOffset() / 60 - parseInt(e.detail.parameters["dst"]);
+
         // parse date input
         [
             e.detail.parameters["year"],
             e.detail.parameters["month"],
             e.detail.parameters["date"],
         ] = e.detail.parameters["date"].split("-");
-
-        // add timezone offset to request params
-        e.detail.parameters["tz"] =
-            -today.getTimezoneOffset() / 60 - parseInt(e.detail.parameters["dst"]);
     });
 };
+
+function isDST(d) {
+    const year = d.getFullYear();
+    const jan = new Date(year, 0, 1).getTimezoneOffset();
+    const jul = new Date(year, 6, 1).getTimezoneOffset();
+    return Math.max(jan, jul) !== d.getTimezoneOffset();
+}
