@@ -6,7 +6,7 @@ Site to fetch Islamic prayer times for a given date and location
 
 Fill out the query form on [prayers.cybar.dev](https://prayers.cybar.dev "website") as shown below and click the <kbd>Show</kbd> button.
 
-<img src="https://github.com/cybardev/prayers/assets/50134239/74a74960-def0-44fe-9be6-39b8f0baafa1" alt="Query Form" style="width:485px;height:416px;">
+<img src="https://github.com/cybardev/prayers/assets/50134239/74a74960-def0-44fe-9be6-39b8f0baafa1" alt="Query Form" style="height:416px;">
 
 ## Usage (API)
 
