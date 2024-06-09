@@ -14,10 +14,12 @@ window.onload = function () {
         e.detail.parameters["dst"] = isDST(new Date(e.detail.parameters["date"]))
             ? "1"
             : "0";
+        console.log(e.detail.parameters["dst"]);
 
         // add timezone offset to request params
         e.detail.parameters["tz"] =
             -today.getTimezoneOffset() / 60 - parseInt(e.detail.parameters["dst"]);
+        console.log(e.detail.parameters["tz"]);
 
         // parse date input
         [
